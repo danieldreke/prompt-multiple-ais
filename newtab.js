@@ -84,13 +84,32 @@ textarea.addEventListener('keydown', (e) => {
 
 document.getElementById('send').addEventListener('click', triggerSend);
 
+function applyActivation(value) {
+  const num = parseInt(value, 10);
+  const newKeys = isNaN(num)
+    ? CHATBOTS.filter(b => value.includes(b.key)).map(b => b.key)
+    : CHATBOTS.slice(0, num).map(b => b.key);
+  enabled.clear();
+  newKeys.forEach(k => enabled.add(k));
+  saveEnabled();
+  document.querySelectorAll('.bot-pill').forEach(pill => {
+    pill.classList.toggle('off', !enabled.has(pill.dataset.key));
+  });
+}
+
 const params = new URLSearchParams(location.search);
+const activateParam = params.get('activate');
 const initialQuery = params.get('q');
-if (initialQuery) {
+if (activateParam) {
+  history.replaceState(null, '', location.pathname);
+  applyActivation(activateParam);
+  textarea.focus();
+} else if (initialQuery) {
   history.replaceState(null, '', location.pathname);
   textarea.value = initialQuery;
   const n = params.get('n');
   const l = params.get('l');
-  const selector = n ? parseInt(n, 10) : l ? l : null;
-  sendPrompt(initialQuery, selector);
+  if (n) applyActivation(n);
+  else if (l) applyActivation(l);
+  sendPrompt(initialQuery);
 }

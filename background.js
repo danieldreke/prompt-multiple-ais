@@ -18,18 +18,17 @@ chrome.runtime.onMessage.addListener((msg) => {
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   const numberMatch = text.match(/^(\d+)\s+([\s\S]+)$/);
   const letterMatch = text.match(/^([cgpomdq]+)\s+([\s\S]+)$/);
-  let q, param;
+  const activateMatch = text.match(/^(\d+|[cgpomdq]+)$/);
+  let url;
   if (numberMatch) {
-    q = numberMatch[2];
-    param = '&n=' + numberMatch[1];
+    url = chrome.runtime.getURL('newtab.html') + '?q=' + encodeURIComponent(numberMatch[2]) + '&n=' + numberMatch[1];
   } else if (letterMatch) {
-    q = letterMatch[2];
-    param = '&l=' + letterMatch[1];
+    url = chrome.runtime.getURL('newtab.html') + '?q=' + encodeURIComponent(letterMatch[2]) + '&l=' + letterMatch[1];
+  } else if (activateMatch) {
+    url = chrome.runtime.getURL('newtab.html') + '?activate=' + activateMatch[1];
   } else {
-    q = text;
-    param = '';
+    url = chrome.runtime.getURL('newtab.html') + '?q=' + encodeURIComponent(text);
   }
-  const url = chrome.runtime.getURL('newtab.html') + '?q=' + encodeURIComponent(q) + param;
   if (disposition === 'newForegroundTab' || disposition === 'newBackgroundTab') {
     chrome.tabs.create({ url, active: disposition === 'newForegroundTab' });
   } else {

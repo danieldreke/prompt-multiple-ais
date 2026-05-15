@@ -8,9 +8,7 @@ chrome.runtime.onMessage.addListener((msg) => {
       chrome.tabs.onUpdated.addListener(function listener(id, info) {
         if (id === tabId && info.status === 'complete') {
           chrome.tabs.onUpdated.removeListener(listener);
-          setTimeout(() => {
-            chrome.tabs.sendMessage(tabId, { type: 'RUN_PROMPT', prompt });
-          }, 1000);
+          chrome.tabs.sendMessage(tabId, { type: 'RUN_PROMPT', prompt });
         }
       });
     });

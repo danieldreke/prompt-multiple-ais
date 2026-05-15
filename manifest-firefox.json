@@ -1,11 +1,11 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Prompt Multiple AIs",
   "version": "1.0",
   "browser_specific_settings": {
     "gecko": {
       "id": "prompt-multiple-ais@extension",
-      "strict_min_version": "121.0"
+      "strict_min_version": "109.0"
     }
   },
   "chrome_url_overrides": {
@@ -30,5 +30,7 @@
     }
   ],
   "omnibox": { "keyword": "pp" },
-  "background": { "service_worker": "background.js" }
+  "background": {
+    "scripts": ["background.js"]
+  }
 }

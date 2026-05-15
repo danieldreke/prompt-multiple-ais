@@ -82,6 +82,27 @@ textarea.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && e.ctrlKey) triggerSend();
 });
 
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.shiftKey && e.code.startsWith('Digit')) {
+    const n = parseInt(e.code.replace('Digit', ''), 10);
+    if (n >= 1 && n <= CHATBOTS.length) applyActivation(String(n));
+  }
+  if (e.ctrlKey && e.altKey && e.code.startsWith('Digit')) {
+    const n = parseInt(e.code.replace('Digit', ''), 10);
+    const bot = CHATBOTS[n - 1];
+    if (!bot) return;
+    const pill = document.querySelector(`.bot-pill[data-key="${bot.key}"]`);
+    if (enabled.has(bot.key)) {
+      enabled.delete(bot.key);
+      pill.classList.add('off');
+    } else {
+      enabled.add(bot.key);
+      pill.classList.remove('off');
+    }
+    saveEnabled();
+  }
+});
+
 document.getElementById('send').addEventListener('click', triggerSend);
 
 function applyActivation(value) {

@@ -43,3 +43,4 @@ Type `pp` in the address bar, then a space, then one of:
 | 4   | `m` | Gemini     |
 | 5   | `o` | ChatGPT    |
 | 6   | `d` | DeepSeek   |
+| 7   | `q` | Qwen       |

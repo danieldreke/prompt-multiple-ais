@@ -16,6 +16,11 @@
       "matches": ["https://deep-seek.ai/*"],
       "js": ["content-scripts/deepseek.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chat.qwen.ai/*"],
+      "js": ["content-scripts/qwen.js"],
+      "run_at": "document_idle"
     }
   ],
   "omnibox": { "keyword": "pp" },

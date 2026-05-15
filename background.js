@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   const numberMatch = text.match(/^(\d+)\s+([\s\S]+)$/);
-  const letterMatch = text.match(/^([cgpomd]+)\s+([\s\S]+)$/);
+  const letterMatch = text.match(/^([cgpomdq]+)\s+([\s\S]+)$/);
   let q, param;
   if (numberMatch) {
     q = numberMatch[2];

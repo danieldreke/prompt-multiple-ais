@@ -5,6 +5,7 @@ const CHATBOTS = [
   { key: 'm', url: 'https://gemini.google.com/app', inject: true },
   { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
   { key: 'd', url: 'https://deep-seek.ai/chat', inject: true },
+  { key: 'q', url: 'https://chat.qwen.ai/', inject: true },
 ];
 
 const savedKeys = JSON.parse(localStorage.getItem('enabled') || 'null');

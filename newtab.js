@@ -16,7 +16,7 @@ function saveEnabled() {
 }
 
 document.querySelectorAll('.bot-pill').forEach(pill => {
-  if (!enabled.has(pill.dataset.key)) pill.classList.add('off');
+  if (enabled.has(pill.dataset.key)) pill.classList.remove('off');
 
   pill.addEventListener('click', () => {
     const key = pill.dataset.key;

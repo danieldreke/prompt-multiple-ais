@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === 'openTab') {
     chrome.tabs.create({ url: msg.url, active: false });
-  } else if (msg.type === 'openGemini') {
+  } else if (msg.type === 'openInject') {
     const prompt = msg.prompt;
     chrome.tabs.create({ url: msg.url, active: false }, (tab) => {
       const tabId = tab.id;
@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   const numberMatch = text.match(/^(\d+)\s+([\s\S]+)$/);
-  const letterMatch = text.match(/^([cgpom]+)\s+([\s\S]+)$/);
+  const letterMatch = text.match(/^([cgpomd]+)\s+([\s\S]+)$/);
   let q, param;
   if (numberMatch) {
     q = numberMatch[2];

@@ -11,6 +11,11 @@
       "matches": ["https://gemini.google.com/*"],
       "js": ["content-scripts/gemini.js"],
       "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://deep-seek.ai/*"],
+      "js": ["content-scripts/deepseek.js"],
+      "run_at": "document_idle"
     }
   ],
   "omnibox": { "keyword": "pp" },

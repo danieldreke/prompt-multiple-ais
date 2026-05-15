@@ -40,5 +40,6 @@ Type `pp` in the address bar, then a space, then one of:
 | 1   | `c` | Claude     |
 | 2   | `g` | Grok       |
 | 3   | `p` | Perplexity |
-| 4   | `o` | ChatGPT    |
-| 5   | `m` | Gemini     |
+| 4   | `m` | Gemini     |
+| 5   | `o` | ChatGPT    |
+| 6   | `d` | DeepSeek   |

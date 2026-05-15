@@ -2,8 +2,9 @@ const CHATBOTS = [
   { key: 'c', url: q => 'https://claude.ai/new?q=' + q + '&pin=1027' },
   { key: 'g', url: q => 'https://grok.com/?q=' + q },
   { key: 'p', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
-  { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
   { key: 'm', url: 'https://gemini.google.com/app', inject: true },
+  { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
+  { key: 'd', url: 'https://deep-seek.ai/chat', inject: true },
 ];
 
 const savedKeys = JSON.parse(localStorage.getItem('enabled') || 'null');
@@ -42,7 +43,7 @@ function sendPrompt(query, selector = null) {
   }
   bots.forEach(b => {
     if (b.inject) {
-      chrome.runtime.sendMessage({ type: 'openGemini', url: b.url, prompt: query });
+      chrome.runtime.sendMessage({ type: 'openInject', url: b.url, prompt: query });
     } else {
       chrome.runtime.sendMessage({ type: 'openTab', url: b.url(q) });
     }

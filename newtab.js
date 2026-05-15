@@ -3,7 +3,7 @@ const CHATBOTS = [
   { key: 'g', url: q => 'https://grok.com/?q=' + q },
   { key: 'p', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
   { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
-  // { key: 'm', url: q => 'https://gemini.google.com/?q=' + q },
+  { key: 'm', url: 'https://gemini.google.com/app', inject: true },
 ];
 
 const savedKeys = JSON.parse(localStorage.getItem('enabled') || 'null');
@@ -40,7 +40,13 @@ function sendPrompt(query, selector = null) {
   } else {
     bots = CHATBOTS.filter(b => selector.includes(b.key));
   }
-  bots.forEach(b => chrome.runtime.sendMessage({ type: 'openTab', url: b.url(q) }));
+  bots.forEach(b => {
+    if (b.inject) {
+      chrome.runtime.sendMessage({ type: 'openGemini', url: b.url, prompt: query });
+    } else {
+      chrome.runtime.sendMessage({ type: 'openTab', url: b.url(q) });
+    }
+  });
 }
 
 const textarea = document.getElementById('prompt');

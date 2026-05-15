@@ -1,6 +1,19 @@
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === 'openTab') {
     chrome.tabs.create({ url: msg.url, active: false });
+  } else if (msg.type === 'openGemini') {
+    const prompt = msg.prompt;
+    chrome.tabs.create({ url: msg.url, active: false }, (tab) => {
+      const tabId = tab.id;
+      chrome.tabs.onUpdated.addListener(function listener(id, info) {
+        if (id === tabId && info.status === 'complete') {
+          chrome.tabs.onUpdated.removeListener(listener);
+          setTimeout(() => {
+            chrome.tabs.sendMessage(tabId, { type: 'RUN_PROMPT', prompt });
+          }, 1000);
+        }
+      });
+    });
   }
 });
 

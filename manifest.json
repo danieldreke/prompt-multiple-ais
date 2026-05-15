@@ -6,6 +6,13 @@
     "newtab": "newtab.html"
   },
   "permissions": ["tabs"],
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["content-scripts/gemini.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "omnibox": { "keyword": "pp" },
   "background": { "service_worker": "background.js" }
 }

@@ -6,6 +6,8 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root { --border: 1.5px; }
+
     body {
       background: #111113;
       color: #e0e0e0;
@@ -46,30 +48,33 @@
       font-weight: 500;
       padding: 6px 16px;
       border-radius: 999px;
-      border: 1px solid;
-      opacity: 0.85;
+      border: var(--border) solid;
+      opacity: 1;
       cursor: pointer;
       user-select: none;
-      transition: opacity 0.15s, filter 0.15s;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
 
     .bot-pill.off {
-      opacity: 0.45;
-      filter: grayscale(1);
+      color: #606060 !important;
+      border-color: #383838 !important;
+      background: #1e1e1e !important;
+      opacity: 1;
+      filter: none;
     }
 
-    .bot-claude  { color: #e8906a; border-color: #7a3a22; background: #2a1710; }
-    .bot-grok    { color: #f0f0f0; border-color: #666;    background: #2a2a2a; }
-    .bot-perp    { color: #5bc4c0; border-color: #1d5e5c; background: #0e2827; }
-    .bot-chatgpt { color: #6ee7a0; border-color: #1a5c38; background: #0e2419; }
-    .bot-gemini  { color: #a8c8ff; border-color: #4a7aef; background: #111d40; }
+    .bot-claude  { color: #f0a07a; border-color: #c0522a; background: #2a1710; }
+    .bot-grok    { color: #ffffff; border-color: #888;    background: #2a2a2a; }
+    .bot-perp    { color: #6ed4d0; border-color: #2d8a86; background: #0e2827; }
+    .bot-chatgpt { color: #7df0aa; border-color: #22804a; background: #0e2419; }
+    .bot-gemini  { color: #b8d4ff; border-color: #6090f8; background: #111d40; }
 
     textarea {
       width: 100%;
       min-height: 140px;
       background: #1c1c1f;
       color: #e8e8e8;
-      border: 1px solid #2e2e33;
+      border: var(--border) solid #2e2e33;
       border-radius: 12px;
       padding: 18px 20px;
       font-size: 16px;

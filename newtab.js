@@ -83,11 +83,11 @@ textarea.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.shiftKey && e.code.startsWith('Digit')) {
+  if (e.ctrlKey && e.shiftKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
     const n = parseInt(e.code.replace('Digit', ''), 10);
     if (n >= 1 && n <= CHATBOTS.length) applyActivation(String(n));
   }
-  if (e.ctrlKey && e.altKey && e.code.startsWith('Digit')) {
+  if (e.ctrlKey && e.altKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
     const n = parseInt(e.code.replace('Digit', ''), 10);
     const bot = CHATBOTS[n - 1];
     if (!bot) return;
@@ -100,6 +100,17 @@ document.addEventListener('keydown', (e) => {
       pill.classList.remove('off');
     }
     saveEnabled();
+  }
+  if ((e.ctrlKey && e.shiftKey && e.code === 'Digit0') || (e.ctrlKey && e.altKey && e.code === 'Digit0')) {
+    if (enabled.size > 0) {
+      enabled.clear();
+    } else {
+      CHATBOTS.forEach(b => enabled.add(b.key));
+    }
+    saveEnabled();
+    document.querySelectorAll('.bot-pill').forEach(pill => {
+      pill.classList.toggle('off', !enabled.has(pill.dataset.key));
+    });
   }
 });
 

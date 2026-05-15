@@ -52,12 +52,29 @@ function sendPrompt(query, selector = null) {
 }
 
 const textarea = document.getElementById('prompt');
+const sendBtn = document.getElementById('send');
+
+const textareaBorderHeight = parseFloat(getComputedStyle(textarea).borderTopWidth) + parseFloat(getComputedStyle(textarea).borderBottomWidth);
+
+function autoResize() {
+  textarea.style.height = 'auto';
+  textarea.style.height = (textarea.scrollHeight + textareaBorderHeight) + 'px';
+}
+
+function updateSendBtn() {
+  sendBtn.disabled = !textarea.value.trim();
+}
+
+textarea.addEventListener('input', () => { autoResize(); updateSendBtn(); });
+updateSendBtn();
 
 function triggerSend() {
   const query = textarea.value.trim();
   if (query) {
     sendPrompt(query);
     textarea.value = '';
+    autoResize();
+    updateSendBtn();
   }
 }
 

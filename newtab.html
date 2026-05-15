@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prompt Multiple AIs</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111113;
+      color: #e0e0e0;
+      font-family: system-ui, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #container {
+      width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    #header {
+      text-align: center;
+    }
+
+    #header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #f0f0f0;
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+
+    #bots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .bot-pill {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid;
+      opacity: 0.85;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.15s, filter 0.15s;
+    }
+
+    .bot-pill.off {
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+
+    .bot-claude  { color: #e8906a; border-color: #7a3a22; background: #2a1710; }
+    .bot-grok    { color: #f0f0f0; border-color: #666;    background: #2a2a2a; }
+    .bot-perp    { color: #5bc4c0; border-color: #1d5e5c; background: #0e2827; }
+    .bot-chatgpt { color: #6ee7a0; border-color: #1a5c38; background: #0e2419; }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      background: #1c1c1f;
+      color: #e8e8e8;
+      border: 1px solid #2e2e33;
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 16px;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      line-height: 1.6;
+      transition: border-color 0.15s;
+    }
+
+    textarea::placeholder {
+      color: #444;
+    }
+
+    textarea:focus {
+      border-color: #3a3a42;
+      background: #1e1e22;
+    }
+
+    #bottom {
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:active {
+      background: #1e40af;
+    }
+
+    button kbd {
+      font-size: 11px;
+      color: #93c5fd;
+      background: #1e40af;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="header">
+      <h1>Prompt Multiple AIs</h1>
+      <div id="bots">
+        <span class="bot-pill bot-claude" data-key="c">Claude</span>
+        <span class="bot-pill bot-grok"    data-key="g">Grok</span>
+        <span class="bot-pill bot-perp"    data-key="p">Perplexity</span>
+        <span class="bot-pill bot-chatgpt" data-key="o">ChatGPT</span>
+      </div>
+    </div>
+    <textarea id="prompt" placeholder="What do you want to ask?" autofocus></textarea>
+    <div id="bottom">
+      <button id="send">Send <kbd>Ctrl+Enter</kbd></button>
+    </div>
+  </div>
+  <script src="newtab.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Prompt Multiple AIs",
+  "version": "1.0",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["tabs"],
+  "omnibox": { "keyword": "pp" },
+  "background": { "service_worker": "background.js" }
+}

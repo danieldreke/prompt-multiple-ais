@@ -1,0 +1,71 @@
+const CHATBOTS = [
+  { key: 'c', url: q => 'https://claude.ai/new?q=' + q + '&pin=1027' },
+  { key: 'g', url: q => 'https://grok.com/?q=' + q },
+  { key: 'p', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
+  { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
+  // { key: 'm', url: q => 'https://gemini.google.com/?q=' + q },
+];
+
+const savedKeys = JSON.parse(localStorage.getItem('enabled') || 'null');
+const enabled = new Set(savedKeys ?? CHATBOTS.map(b => b.key));
+
+function saveEnabled() {
+  localStorage.setItem('enabled', JSON.stringify([...enabled]));
+}
+
+document.querySelectorAll('.bot-pill').forEach(pill => {
+  if (!enabled.has(pill.dataset.key)) pill.classList.add('off');
+
+  pill.addEventListener('click', () => {
+    const key = pill.dataset.key;
+    if (enabled.has(key)) {
+      enabled.delete(key);
+      pill.classList.add('off');
+    } else {
+      enabled.add(key);
+      pill.classList.remove('off');
+    }
+    saveEnabled();
+  });
+});
+
+function sendPrompt(query, selector = null) {
+  document.title = query;
+  const q = encodeURIComponent(query);
+  let bots;
+  if (selector === null) {
+    bots = CHATBOTS.filter(b => enabled.has(b.key));
+  } else if (typeof selector === 'number') {
+    bots = CHATBOTS.slice(0, selector);
+  } else {
+    bots = CHATBOTS.filter(b => selector.includes(b.key));
+  }
+  bots.forEach(b => chrome.runtime.sendMessage({ type: 'openTab', url: b.url(q) }));
+}
+
+const textarea = document.getElementById('prompt');
+
+function triggerSend() {
+  const query = textarea.value.trim();
+  if (query) {
+    sendPrompt(query);
+    textarea.value = '';
+  }
+}
+
+textarea.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.ctrlKey) triggerSend();
+});
+
+document.getElementById('send').addEventListener('click', triggerSend);
+
+const params = new URLSearchParams(location.search);
+const initialQuery = params.get('q');
+if (initialQuery) {
+  history.replaceState(null, '', location.pathname);
+  textarea.value = initialQuery;
+  const n = params.get('n');
+  const l = params.get('l');
+  const selector = n ? parseInt(n, 10) : l ? l : null;
+  sendPrompt(initialQuery, selector);
+}

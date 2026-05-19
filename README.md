@@ -2,7 +2,7 @@
 
 ![Claude](https://img.shields.io/badge/Built_With-Claude-D97757?style=flat&logo=claude&logoColor=D97757) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A Chrome extension that sends the same prompt to multiple AI chatbots simultaneously.
+A browser extension that sends the same prompt to multiple AI chatbots simultaneously.
 
 ![Screenshot](screenshot.png)
 

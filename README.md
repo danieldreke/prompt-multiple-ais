@@ -4,6 +4,8 @@
 
 A Chrome extension that sends the same prompt to multiple AI chatbots simultaneously.
 
+![Screenshot](screenshot.png)
+
 ## Features
 
 - New tab override with a prompt textarea

@@ -19,7 +19,7 @@
     }
 
     #container {
-      width: 688px;
+      width: max-content;
       display: flex;
       flex-direction: column;
       gap: var(--gap);
@@ -40,7 +40,65 @@
     #bots {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 8px;
+    }
+
+    #toggle-all {
+      position: relative;
+      bottom: auto;
+      right: auto;
+      width: auto;
+      height: auto;
+      background: #1e1e1e;
+      border: var(--border) solid #404040;
+      border-radius: 999px;
+      color: #505050;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--p1) var(--p2);
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 500;
+      user-select: none;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    #toggle-all:hover {
+      background: #2a2a2e;
+      color: #d0d0d0;
+      border-color: #666;
+    }
+
+    #toggle-all.all-action {
+      color: #e0e0e0;
+      border-color: #707070;
+      background: #2a2a2e;
+    }
+
+    #toggle-all::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 7px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2a2a2e;
+      color: #ccc;
+      font-size: 12px;
+      font-weight: 400;
+      padding: 4px 9px;
+      border-radius: 5px;
+      border: 1px solid #3a3a42;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    #toggle-all:hover::after {
+      opacity: 1;
     }
 
     .bot-pill {
@@ -170,6 +228,7 @@
     <div id="header">
       <h1>Prompt Multiple AIs</h1>
       <div id="bots">
+        <button id="toggle-all"></button>
         <span class="bot-pill bot-claude off" data-key="c"><span class="pill-num">1</span><span class="pill-name">Claude</span></span>
         <span class="bot-pill bot-grok off"    data-key="g"><span class="pill-num">2</span><span class="pill-name">Grok</span></span>
         <span class="bot-pill bot-perp off"    data-key="p"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></span>
@@ -189,9 +248,9 @@
     </div>
     <div id="shortcuts">
       <span><kbd>ctrl</kbd><kbd>enter</kbd> send</span>
-      <span><kbd>ctrl</kbd><kbd>shift</kbd><kbd>1–7</kbd> activate first <i>n</i></span>
-      <span><kbd>ctrl</kbd><kbd>alt</kbd><kbd>1–7</kbd> toggle <i>n</i>th</span>
       <span><kbd>ctrl</kbd><kbd>shift/alt</kbd><kbd>0</kbd> toggle all</span>
+      <span><kbd>ctrl</kbd><kbd>alt</kbd><kbd>1–7</kbd> activate first <i>n</i></span>
+      <span><kbd>ctrl</kbd><kbd>shift</kbd><kbd>1–7</kbd> toggle <i>n</i>th</span>
     </div>
   </div>
   <script src="newtab.js"></script>

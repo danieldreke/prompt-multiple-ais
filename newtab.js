@@ -15,6 +15,27 @@ function saveEnabled() {
   localStorage.setItem('enabled', JSON.stringify([...enabled]));
 }
 
+function updateToggleAllBtn() {
+  const btn = toggleAllBtn;
+  const anyOn = enabled.size > 0;
+  btn.textContent = anyOn ? 'None' : 'All';
+  btn.dataset.tooltip = anyOn ? 'Deselect all AIs' : 'Select all AIs';
+  btn.classList.toggle('all-action', !anyOn);
+}
+
+function toggleAll() {
+  if (enabled.size > 0) {
+    enabled.clear();
+  } else {
+    CHATBOTS.forEach(b => enabled.add(b.key));
+  }
+  saveEnabled();
+  document.querySelectorAll('.bot-pill').forEach(pill => {
+    pill.classList.toggle('off', !enabled.has(pill.dataset.key));
+  });
+  updateToggleAllBtn();
+}
+
 document.querySelectorAll('.bot-pill').forEach(pill => {
   if (enabled.has(pill.dataset.key)) pill.classList.remove('off');
 
@@ -28,8 +49,18 @@ document.querySelectorAll('.bot-pill').forEach(pill => {
       pill.classList.remove('off');
     }
     saveEnabled();
+    updateToggleAllBtn();
   });
 });
+
+const toggleAllBtn = document.getElementById('toggle-all');
+toggleAllBtn.addEventListener('click', toggleAll);
+
+// Lock width to the wider label ('None') so it never resizes on toggle
+toggleAllBtn.textContent = 'None';
+toggleAllBtn.style.minWidth = toggleAllBtn.getBoundingClientRect().width + 'px';
+
+updateToggleAllBtn();
 
 function sendPrompt(query, selector = null) {
   document.title = query;
@@ -72,22 +103,16 @@ function triggerSend() {
   const query = textarea.value.trim();
   if (query) {
     sendPrompt(query);
-    textarea.value = '';
-    autoResize();
-    updateSendBtn();
   }
 }
 
-textarea.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && e.ctrlKey) triggerSend();
-});
-
 document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.shiftKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
+  if (e.key === 'Enter' && e.ctrlKey) { triggerSend(); return; }
+  if (e.ctrlKey && e.altKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
     const n = parseInt(e.code.replace('Digit', ''), 10);
     if (n >= 1 && n <= CHATBOTS.length) applyActivation(String(n));
   }
-  if (e.ctrlKey && e.altKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
+  if (e.ctrlKey && e.shiftKey && e.code.startsWith('Digit') && e.code !== 'Digit0') {
     const n = parseInt(e.code.replace('Digit', ''), 10);
     const bot = CHATBOTS[n - 1];
     if (!bot) return;
@@ -100,17 +125,10 @@ document.addEventListener('keydown', (e) => {
       pill.classList.remove('off');
     }
     saveEnabled();
+    updateToggleAllBtn();
   }
   if ((e.ctrlKey && e.shiftKey && e.code === 'Digit0') || (e.ctrlKey && e.altKey && e.code === 'Digit0')) {
-    if (enabled.size > 0) {
-      enabled.clear();
-    } else {
-      CHATBOTS.forEach(b => enabled.add(b.key));
-    }
-    saveEnabled();
-    document.querySelectorAll('.bot-pill').forEach(pill => {
-      pill.classList.toggle('off', !enabled.has(pill.dataset.key));
-    });
+    toggleAll();
   }
 });
 
@@ -127,6 +145,7 @@ function applyActivation(value) {
   document.querySelectorAll('.bot-pill').forEach(pill => {
     pill.classList.toggle('off', !enabled.has(pill.dataset.key));
   });
+  updateToggleAllBtn();
 }
 
 const params = new URLSearchParams(location.search);

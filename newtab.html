@@ -60,6 +60,7 @@
       justify-content: center;
       padding: var(--p1) var(--p2);
       flex-shrink: 0;
+      font-family: inherit;
       font-size: 14px;
       font-weight: 500;
       user-select: none;
@@ -87,7 +88,7 @@
       background: #2a2a2e;
       color: #ccc;
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       padding: 4px 9px;
       border-radius: 5px;
       border: 1px solid #3a3a42;
@@ -102,6 +103,7 @@
     }
 
     .bot-pill {
+      font-family: inherit;
       font-size: 14px;
       font-weight: 500;
       padding: 0;
@@ -170,6 +172,10 @@
     }
 
     button {
+      user-select: none;
+    }
+
+    #send {
       position: absolute;
       bottom: 14px;
       right: 12px;
@@ -186,20 +192,20 @@
       padding: 0;
     }
 
-    button:hover:not(:disabled) {
+    #send:hover:not(:disabled) {
       background: #1d4ed8;
     }
 
-    button:disabled {
+    #send:disabled {
       background: #374151;
       cursor: not-allowed;
     }
 
-    button:disabled svg {
+    #send:disabled svg {
       fill: #9ca3af;
     }
 
-    button:active {
+    #send:active {
       background: #1e40af;
     }
 
@@ -228,14 +234,14 @@
     <div id="header">
       <h1>Prompt Multiple AIs</h1>
       <div id="bots">
-        <button id="toggle-all"></button>
-        <span class="bot-pill bot-claude off" data-key="c"><span class="pill-num">1</span><span class="pill-name">Claude</span></span>
-        <span class="bot-pill bot-grok off"    data-key="g"><span class="pill-num">2</span><span class="pill-name">Grok</span></span>
-        <span class="bot-pill bot-perp off"    data-key="p"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></span>
-        <span class="bot-pill bot-gemini off"  data-key="m"><span class="pill-num">4</span><span class="pill-name">Gemini</span></span>
-        <span class="bot-pill bot-chatgpt off" data-key="o"><span class="pill-num">5</span><span class="pill-name">ChatGPT</span></span>
-        <span class="bot-pill bot-deepseek off" data-key="d"><span class="pill-num">6</span><span class="pill-name">DeepSeek</span></span>
-        <span class="bot-pill bot-qwen off"    data-key="q"><span class="pill-num">7</span><span class="pill-name">Qwen</span></span>
+        <button id="toggle-all" tabindex="-1"></button>
+        <button class="bot-pill bot-claude off"   data-key="c" tabindex="-1"><span class="pill-num">1</span><span class="pill-name">Claude</span></button>
+        <button class="bot-pill bot-grok off"     data-key="g" tabindex="-1"><span class="pill-num">2</span><span class="pill-name">Grok</span></button>
+        <button class="bot-pill bot-perp off"     data-key="p" tabindex="-1"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></button>
+        <button class="bot-pill bot-gemini off"   data-key="m" tabindex="-1"><span class="pill-num">4</span><span class="pill-name">Gemini</span></button>
+        <button class="bot-pill bot-chatgpt off"  data-key="o" tabindex="-1"><span class="pill-num">5</span><span class="pill-name">ChatGPT</span></button>
+        <button class="bot-pill bot-deepseek off" data-key="d" tabindex="-1"><span class="pill-num">6</span><span class="pill-name">DeepSeek</span></button>
+        <button class="bot-pill bot-qwen off"     data-key="q" tabindex="-1"><span class="pill-num">7</span><span class="pill-name">Qwen</span></button>
       </div>
     </div>
     <div id="input-wrap">

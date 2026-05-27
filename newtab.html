@@ -227,9 +227,112 @@
       padding: 2px 6px;
       color: #bbb;
     }
+
+    #theme-toggle {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1.5px solid #404040;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      color: #707070;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    #theme-toggle:hover {
+      background: #2a2a2e;
+      border-color: #666;
+      color: #d0d0d0;
+    }
+
+    body.light {
+      background: #f5f5f7;
+      color: #1a1a1a;
+    }
+
+    body.light #header h1 { color: #111; }
+
+    body.light #toggle-all {
+      background: #e8e8ec;
+      border-color: #c0c0c8;
+      color: #888;
+    }
+
+    body.light #toggle-all:hover {
+      background: #dcdce4;
+      color: #333;
+      border-color: #999;
+    }
+
+    body.light #toggle-all.all-action {
+      color: #111;
+      border-color: #666;
+      background: #dcdce4;
+    }
+
+    body.light #toggle-all::after {
+      background: #dcdce4;
+      color: #333;
+      border-color: #c0c0c8;
+    }
+
+    body.light .bot-pill.off {
+      color: #999 !important;
+      border-color: #d0d0d8 !important;
+      background: #e8e8ec !important;
+    }
+
+    body.light .bot-claude   { color: #c04020; border-color: #e08060; background: #fff0ea; }
+    body.light .bot-grok     { color: #333;    border-color: #999;    background: #f0f0f0; }
+    body.light .bot-perp     { color: #1a6a68; border-color: #4aa8a4; background: #e8faf9; }
+    body.light .bot-chatgpt  { color: #1a7040; border-color: #4ab878; background: #e8faf0; }
+    body.light .bot-gemini   { color: #3060c8; border-color: #7098e8; background: #eef4ff; }
+    body.light .bot-deepseek { color: #1a7090; border-color: #5aa8c8; background: #e4f4fc; }
+    body.light .bot-qwen     { color: #6030b8; border-color: #9060d8; background: #f4eeff; }
+
+    body.light textarea {
+      background: #fff;
+      color: #1a1a1a;
+      border-color: #d0d0d8;
+    }
+
+    body.light textarea::placeholder { color: #aaa; }
+
+    body.light textarea:focus {
+      border-color: #a0a0b0;
+      background: #f8f8fa;
+    }
+
+    body.light #shortcuts { color: #999; }
+
+    body.light kbd {
+      background: #e0e0e8;
+      border-color: #b0b0bc;
+      color: #555;
+    }
+
+    body.light #theme-toggle {
+      border-color: #c0c0c8;
+      color: #888;
+    }
+
+    body.light #theme-toggle:hover {
+      background: #dcdce4;
+      border-color: #999;
+      color: #333;
+    }
   </style>
 </head>
 <body>
+  <script>if(localStorage.getItem('theme')==='light')document.body.classList.add('light');</script>
+  <button id="theme-toggle" tabindex="-1"></button>
   <div id="container">
     <div id="header">
       <h1>Prompt Multiple AIs</h1>

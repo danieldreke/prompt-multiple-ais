@@ -1,6 +1,6 @@
 const SELECTORS = {
   input: 'textarea[placeholder], div[contenteditable="true"]',
-  sendBtn: 'button[type="submit"], button[aria-label*="Send"], button[aria-label*="send"]',
+  sendBtn: 'button.send-button, button[type="submit"], button[aria-label*="Send"], button[aria-label*="send"]',
 };
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {

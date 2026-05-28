@@ -57,8 +57,8 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: var(--p1) var(--p2);
+      justify-content: flex-start;
+      padding: 0;
       flex-shrink: 0;
       font-family: inherit;
       font-size: 14px;
@@ -124,6 +124,11 @@
 
     .pill-name {
       padding: var(--p1) var(--p2) var(--p1) var(--p1);
+    }
+
+    #toggle-all .pill-name {
+      flex: 1;
+      text-align: center;
     }
 
     .bot-pill.off {
@@ -318,6 +323,10 @@
       color: #555;
     }
 
+    body.light #send:disabled {
+      background: #e8e8ec;
+    }
+
     body.light #theme-toggle {
       border-color: #c0c0c8;
       color: #888;
@@ -337,7 +346,7 @@
     <div id="header">
       <h1>Prompt Multiple AIs</h1>
       <div id="bots">
-        <button id="toggle-all" tabindex="-1"></button>
+        <button id="toggle-all" tabindex="-1"><span class="pill-num">0</span><span class="pill-name"></span></button>
         <button class="bot-pill bot-claude off"   data-key="c" tabindex="-1"><span class="pill-num">1</span><span class="pill-name">Claude</span></button>
         <button class="bot-pill bot-grok off"     data-key="g" tabindex="-1"><span class="pill-num">2</span><span class="pill-name">Grok</span></button>
         <button class="bot-pill bot-perp off"     data-key="p" tabindex="-1"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></button>

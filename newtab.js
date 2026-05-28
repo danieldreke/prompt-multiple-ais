@@ -35,7 +35,7 @@ function saveEnabled() {
 function updateToggleAllBtn() {
   const btn = toggleAllBtn;
   const anyOn = enabled.size > 0;
-  btn.textContent = anyOn ? 'None' : 'All';
+  btn.querySelector('.pill-name').textContent = anyOn ? 'None' : 'All';
   btn.dataset.tooltip = anyOn ? 'Deselect all AIs' : 'Select all AIs';
   btn.classList.toggle('all-action', !anyOn);
 }
@@ -74,7 +74,7 @@ const toggleAllBtn = document.getElementById('toggle-all');
 toggleAllBtn.addEventListener('click', toggleAll);
 
 // Lock width to the wider label ('None') so it never resizes on toggle
-toggleAllBtn.textContent = 'None';
+toggleAllBtn.querySelector('.pill-name').textContent = 'None';
 toggleAllBtn.style.minWidth = toggleAllBtn.getBoundingClientRect().width + 'px';
 
 updateToggleAllBtn();

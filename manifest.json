@@ -14,6 +14,11 @@
   "permissions": ["tabs"],
   "content_scripts": [
     {
+      "matches": ["https://claude.ai/*"],
+      "js": ["content-scripts/common.js", "content-scripts/claude.js"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": ["https://gemini.google.com/*"],
       "js": ["content-scripts/common.js", "content-scripts/gemini.js"],
       "run_at": "document_idle"

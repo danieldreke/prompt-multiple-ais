@@ -16,7 +16,7 @@ themeToggle.addEventListener('click', () => {
 updateThemeIcon();
 
 const CHATBOTS = [
-  { key: 'c', url: q => 'https://claude.ai/new?q=' + q + '&pin=1027' },
+  { key: 'c', url: 'https://claude.ai/new', inject: true },
   { key: 'g', url: q => 'https://grok.com/?q=' + q },
   { key: 'p', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
   { key: 'm', url: 'https://gemini.google.com/app', inject: true },

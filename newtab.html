@@ -26,22 +26,25 @@
     }
 
     #header {
-      text-align: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0px;
     }
 
     #header h1 {
-      font-size: 22px;
+      font-size: 25px;
       font-weight: 600;
       color: #f0f0f0;
       letter-spacing: -0.3px;
-      margin-bottom: 12px;
     }
 
     #bots {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     #toggle-all {
@@ -117,13 +120,13 @@
     }
 
     .pill-num {
-      padding: var(--p1) var(--p1) var(--p1) var(--p2);
+      padding: var(--p1) calc(var(--p1) + 1px) var(--p1) calc(var(--p2) + 1px);
       border-right: var(--border) solid;
       border-right-color: inherit;
     }
 
     .pill-name {
-      padding: var(--p1) var(--p2) var(--p1) var(--p1);
+      padding: var(--p1) calc(var(--p2) + 1px) var(--p1) calc(var(--p1) + 1px);
     }
 
     #toggle-all .pill-name {
@@ -223,20 +226,34 @@
       color: #888;
     }
 
+    #shortcuts span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0px;
+    }
+
     kbd {
       font-family: inherit;
       font-size: 12px;
       background: #2a2a2e;
       border: 1px solid #4a4a52;
       border-radius: 4px;
-      padding: 2px 6px;
+      padding: 2px 5px;
       color: #bbb;
     }
 
-    #theme-toggle {
-      position: fixed;
-      top: 14px;
-      right: 14px;
+    #header-icons {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #theme-toggle,
+    #github-link {
       width: 32px;
       height: 32px;
       background: transparent;
@@ -251,7 +268,8 @@
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
 
-    #theme-toggle:hover {
+    #theme-toggle:hover,
+    #github-link:hover {
       background: #2a2a2e;
       border-color: #666;
       color: #d0d0d0;
@@ -327,12 +345,14 @@
       background: #e8e8ec;
     }
 
-    body.light #theme-toggle {
+    body.light #theme-toggle,
+    body.light #github-link {
       border-color: #c0c0c8;
       color: #888;
     }
 
-    body.light #theme-toggle:hover {
+    body.light #theme-toggle:hover,
+    body.light #github-link:hover {
       background: #dcdce4;
       border-color: #999;
       color: #333;
@@ -341,20 +361,25 @@
 </head>
 <body>
   <script>if(localStorage.getItem('theme')==='light')document.body.classList.add('light');</script>
-  <button id="theme-toggle" tabindex="-1"></button>
   <div id="container">
     <div id="header">
       <h1>Prompt Multiple AIs</h1>
-      <div id="bots">
-        <button id="toggle-all" tabindex="-1"><span class="pill-num">0</span><span class="pill-name"></span></button>
-        <button class="bot-pill bot-claude off"   data-key="c" tabindex="-1"><span class="pill-num">1</span><span class="pill-name">Claude</span></button>
-        <button class="bot-pill bot-grok off"     data-key="g" tabindex="-1"><span class="pill-num">2</span><span class="pill-name">Grok</span></button>
-        <button class="bot-pill bot-perp off"     data-key="p" tabindex="-1"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></button>
-        <button class="bot-pill bot-gemini off"   data-key="m" tabindex="-1"><span class="pill-num">4</span><span class="pill-name">Gemini</span></button>
-        <button class="bot-pill bot-chatgpt off"  data-key="o" tabindex="-1"><span class="pill-num">5</span><span class="pill-name">ChatGPT</span></button>
-        <!-- <button class="bot-pill bot-deepseek off" data-key="d" tabindex="-1"><span class="pill-num">7</span><span class="pill-name">DeepSeek</span></button> -->
-        <button class="bot-pill bot-qwen off"     data-key="q" tabindex="-1"><span class="pill-num">6</span><span class="pill-name">Qwen</span></button>
+      <div id="header-icons">
+        <a id="github-link" href="https://github.com/danieldreke/prompt-multiple-ais" target="_blank" rel="noopener" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+        </a>
+        <button id="theme-toggle" tabindex="-1"></button>
       </div>
+    </div>
+    <div id="bots">
+      <button id="toggle-all" tabindex="-1"><span class="pill-num">0</span><span class="pill-name"></span></button>
+      <button class="bot-pill bot-claude off"   data-key="c" tabindex="-1"><span class="pill-num">1</span><span class="pill-name">Claude</span></button>
+      <button class="bot-pill bot-grok off"     data-key="g" tabindex="-1"><span class="pill-num">2</span><span class="pill-name">Grok</span></button>
+      <button class="bot-pill bot-perp off"     data-key="p" tabindex="-1"><span class="pill-num">3</span><span class="pill-name">Perplexity</span></button>
+      <button class="bot-pill bot-gemini off"   data-key="m" tabindex="-1"><span class="pill-num">4</span><span class="pill-name">Gemini</span></button>
+      <button class="bot-pill bot-chatgpt off"  data-key="o" tabindex="-1"><span class="pill-num">5</span><span class="pill-name">ChatGPT</span></button>
+      <!-- <button class="bot-pill bot-deepseek off" data-key="d" tabindex="-1"><span class="pill-num">7</span><span class="pill-name">DeepSeek</span></button> -->
+      <!-- <button class="bot-pill bot-qwen off"     data-key="q" tabindex="-1"><span class="pill-num">6</span><span class="pill-name">Qwen</span></button> -->
     </div>
     <div id="input-wrap">
       <textarea id="prompt" rows="1" placeholder="What do you want to ask?" autofocus></textarea>

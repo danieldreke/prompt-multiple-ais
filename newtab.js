@@ -1,6 +1,8 @@
 const SUN_ICON  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>`;
 const MOON_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
+const SEND_COOLDOWN_MS = 3000;
+
 const themeToggle = document.getElementById('theme-toggle');
 
 function updateThemeIcon() {
@@ -16,13 +18,13 @@ themeToggle.addEventListener('click', () => {
 updateThemeIcon();
 
 const CHATBOTS = [
-  { key: 'c', url: 'https://claude.ai/new', inject: true },
-  { key: 'g', url: q => 'https://grok.com/?q=' + q },
-  { key: 'p', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
-  { key: 'm', url: 'https://gemini.google.com/app', inject: true },
-  { key: 'o', url: q => 'https://chatgpt.com/?q=' + q },
-  // { key: 'd', url: 'https://deep-seek.ai/chat', inject: true },
-  // { key: 'q', url: 'https://chat.qwen.ai/', inject: true },
+  { key: 'c', name: 'Claude', url: 'https://claude.ai/new', inject: true },
+  { key: 'g', name: 'Grok', url: q => 'https://grok.com/?q=' + q },
+  { key: 'p', name: 'Perplexity', url: q => 'https://www.perplexity.ai/search?s=o&q=' + q },
+  { key: 'm', name: 'Gemini', url: 'https://gemini.google.com/app', inject: true },
+  { key: 'o', name: 'ChatGPT', url: q => 'https://chatgpt.com/?q=' + q },
+  // { key: 'd', name: 'DeepSeek', url: 'https://deep-seek.ai/chat', inject: true },
+  // { key: 'q', name: 'Qwen', url: 'https://chat.qwen.ai/', inject: true },
 ];
 
 const savedKeys = JSON.parse(localStorage.getItem('enabled') || 'null');
@@ -97,6 +99,7 @@ function sendPrompt(query, selector = null) {
       chrome.runtime.sendMessage({ type: 'openTab', url: b.url(q) });
     }
   });
+  return bots;
 }
 
 const textarea = document.getElementById('prompt');
@@ -116,11 +119,41 @@ function updateSendBtn() {
 textarea.addEventListener('input', () => { autoResize(); updateSendBtn(); });
 updateSendBtn();
 
+let sendLocked = false;
+
+function showToast(message) {
+  const existing = document.getElementById('toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => toast.classList.add('show'));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+  }, SEND_COOLDOWN_MS);
+}
+
 function triggerSend() {
+  if (sendLocked) return;
   const query = textarea.value.trim();
-  if (query) {
-    sendPrompt(query);
-  }
+  if (!query) return;
+
+  const bots = sendPrompt(query);
+
+  sendLocked = true;
+  sendBtn.disabled = true;
+  showToast(bots.length
+    ? `Sent to ${bots.map(b => b.name).join(', ')}`
+    : 'No AIs selected — nothing sent');
+
+  setTimeout(() => {
+    sendLocked = false;
+    updateSendBtn();
+  }, SEND_COOLDOWN_MS);
 }
 
 document.addEventListener('keydown', (e) => {

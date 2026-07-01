@@ -8,10 +8,8 @@
       "strict_min_version": "121.0"
     }
   },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
-  "permissions": ["tabs"],
+  "action": {},
+  "permissions": ["tabs", "contextMenus", "storage"],
   "content_scripts": [
     {
       "matches": ["https://claude.ai/*"],

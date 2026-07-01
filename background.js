@@ -1,3 +1,32 @@
+const NEWTAB_URL = chrome.runtime.getURL('newtab.html');
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: 'open-newtab',
+    title: 'Open Prompt Multiple AIs',
+    contexts: ['action'],
+  });
+});
+
+chrome.contextMenus.onClicked.addListener((info) => {
+  if (info.menuItemId === 'open-newtab') {
+    chrome.tabs.create({ url: NEWTAB_URL, active: true });
+  }
+});
+
+chrome.action.onClicked.addListener(() => {
+  chrome.tabs.create({ url: NEWTAB_URL, active: true });
+});
+
+chrome.tabs.onCreated.addListener((tab) => {
+  const url = tab.pendingUrl || tab.url;
+  if (url !== '' && url !== 'about:newtab') return;
+  chrome.storage.local.get('openNewTab', ({ openNewTab }) => {
+    if (openNewTab === false) return;
+    chrome.tabs.update(tab.id, { url: NEWTAB_URL });
+  });
+});
+
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type === 'openTab') {
     chrome.tabs.create({ url: msg.url, active: false });

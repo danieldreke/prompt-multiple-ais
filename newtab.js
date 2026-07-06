@@ -198,14 +198,6 @@ function applyActivation(value) {
   updateToggleAllBtn();
 }
 
-const openNewTabCheckbox = document.getElementById('open-new-tab');
-chrome.storage.local.get('openNewTab', ({ openNewTab }) => {
-  openNewTabCheckbox.checked = openNewTab !== false;
-});
-openNewTabCheckbox.addEventListener('change', () => {
-  chrome.storage.local.set({ openNewTab: openNewTabCheckbox.checked });
-});
-
 const params = new URLSearchParams(location.search);
 const activateParam = params.get('activate');
 const initialQuery = params.get('q');

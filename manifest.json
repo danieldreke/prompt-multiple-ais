@@ -33,5 +33,13 @@
     }
   ],
   "omnibox": { "keyword": "pp" },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "Open Prompt Multiple AIs"
+    }
+  },
   "background": { "service_worker": "background.js", "scripts": ["background.js"] }
 }

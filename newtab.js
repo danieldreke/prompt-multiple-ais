@@ -1,21 +1,67 @@
 const SUN_ICON  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>`;
 const MOON_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const AUTO_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9"/></svg>`;
 
 const SEND_COOLDOWN_MS = 3000;
 
+const THEME_ICONS = { auto: AUTO_ICON, light: SUN_ICON, dark: MOON_ICON };
+const THEME_LABELS = { auto: 'Auto (system)', light: 'Light', dark: 'Dark' };
+
+const themeMenuWrapper = document.getElementById('theme-menu-wrapper');
 const themeToggle = document.getElementById('theme-toggle');
+const themeMenu = document.getElementById('theme-menu');
+const themeOptions = themeMenu.querySelectorAll('.theme-option');
+const systemPrefersLight = matchMedia('(prefers-color-scheme: light)');
+const supportsHover = matchMedia('(hover: hover)').matches;
 
-function updateThemeIcon() {
-  themeToggle.innerHTML = document.body.classList.contains('light') ? MOON_ICON : SUN_ICON;
-}
-
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('light');
-  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-  updateThemeIcon();
+themeOptions.forEach(option => {
+  const theme = option.dataset.theme;
+  option.innerHTML = `${THEME_ICONS[theme]}<span>${THEME_LABELS[theme]}</span>`;
 });
 
-updateThemeIcon();
+function currentTheme() {
+  return localStorage.getItem('theme') || 'auto';
+}
+
+function closeThemeMenu() {
+  themeMenu.classList.remove('open');
+}
+
+function applyTheme() {
+  const theme = currentTheme();
+  const isLight = theme === 'light' || (theme === 'auto' && systemPrefersLight.matches);
+  document.body.classList.toggle('light', isLight);
+  themeToggle.innerHTML = THEME_ICONS[theme];
+  themeToggle.title = `Theme: ${THEME_LABELS[theme]}`;
+  themeOptions.forEach(option => {
+    option.classList.toggle('active', option.dataset.theme === theme);
+  });
+}
+
+themeOptions.forEach(option => {
+  option.addEventListener('click', () => {
+    localStorage.setItem('theme', option.dataset.theme);
+    applyTheme();
+    closeThemeMenu();
+  });
+});
+
+if (supportsHover) {
+  themeMenuWrapper.addEventListener('mouseenter', () => themeMenu.classList.add('open'));
+  themeMenuWrapper.addEventListener('mouseleave', closeThemeMenu);
+} else {
+  themeToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', closeThemeMenu);
+}
+
+systemPrefersLight.addEventListener('change', () => {
+  if (currentTheme() === 'auto') applyTheme();
+});
+
+applyTheme();
 
 const CHATBOTS = [
   { key: 'c', name: 'Claude', url: 'https://claude.ai/new', inject: true },

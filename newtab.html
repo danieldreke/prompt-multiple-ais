@@ -28,6 +28,7 @@
 
     #header {
       position: relative;
+      z-index: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -277,6 +278,68 @@
       color: #d0d0d0;
     }
 
+    #theme-menu-wrapper {
+      position: relative;
+    }
+
+    #theme-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #1c1c1f;
+      border: 1px solid #404040;
+      border-radius: 10px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: max-content;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 0.12s, transform 0.12s, visibility 0.12s;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      z-index: 20;
+    }
+
+    #theme-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .theme-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      color: #a0a0a0;
+      font-size: 13px;
+      font-family: inherit;
+      padding: 7px 9px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .theme-option svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .theme-option:hover {
+      background: #2a2a2e;
+      color: #d0d0d0;
+    }
+
+    .theme-option.active {
+      color: #fff;
+      background: #2a2a2e;
+    }
+
     body.light {
       background: #f5f5f7;
       color: #1a1a1a;
@@ -360,6 +423,26 @@
       color: #333;
     }
 
+    body.light #theme-menu {
+      background: #fff;
+      border-color: #c0c0c8;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    body.light .theme-option {
+      color: #888;
+    }
+
+    body.light .theme-option:hover {
+      background: #eaeaef;
+      color: #333;
+    }
+
+    body.light .theme-option.active {
+      color: #111;
+      background: #eaeaef;
+    }
+
     #toast {
       position: fixed;
       bottom: 24px;
@@ -399,7 +482,14 @@
         <a id="github-link" href="https://github.com/danieldreke/prompt-multiple-ais" target="_blank" rel="noopener" tabindex="-1">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"></path></svg>
         </a>
-        <button id="theme-toggle" tabindex="-1"></button>
+        <div id="theme-menu-wrapper">
+          <button id="theme-toggle" tabindex="-1"></button>
+          <div id="theme-menu">
+            <button class="theme-option" data-theme="auto" tabindex="-1"></button>
+            <button class="theme-option" data-theme="light" tabindex="-1"></button>
+            <button class="theme-option" data-theme="dark" tabindex="-1"></button>
+          </div>
+        </div>
       </div>
     </div>
     <div id="bots">

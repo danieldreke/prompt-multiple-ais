@@ -36,7 +36,7 @@
   "commands": {
     "_execute_action": {
       "suggested_key": {
-        "default": "Alt+P"
+        "default": "Alt+A"
       },
       "description": "Open Prompt Multiple AIs"
     }

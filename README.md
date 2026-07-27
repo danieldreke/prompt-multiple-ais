@@ -2,7 +2,13 @@
 
 ![Claude](https://img.shields.io/badge/Built_With-Claude-D97757?style=flat&logo=claude&logoColor=D97757) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A browser extension that sends the same prompt to multiple AI chatbots simultaneously.
+A browser extension that sends the same prompt to multiple AI chatbots.
+
+Opens automatically each selected chatbot in its own tab, inserts your prompt, and submits it. 
+Might not work at all times due to constant changes of AI chatbots prompt interfaces.
+Feel free to fork and modify.
+
+My work environment: Thinkpad, US-keys, Linux Mint, git, Brave, Claude Code, grok build, GitHub & more.
 
 ![Screenshot](screenshot.png)
 

@@ -8,13 +8,11 @@ Opens automatically each selected chatbot in its own tab, inserts your prompt, a
 Might not work at all times due to constant changes of AI chatbots prompt interfaces.
 Feel free to fork and modify.
 
-My work environment: Thinkpad, US-keys, Linux Mint, git, Brave, Claude Code, grok build, GitHub & more.
-
 ![Screenshot](screenshot.png)
 
 ## Features
 
-- New tab override with a prompt textarea
+- Open with ALT-A shortcut
 - Toggle individual AIs on/off
 - Omnibox shortcut (`pp`) to fire prompts without opening a new tab
 
